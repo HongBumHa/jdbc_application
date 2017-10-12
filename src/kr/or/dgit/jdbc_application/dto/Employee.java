@@ -3,6 +3,10 @@ package kr.or.dgit.jdbc_application.dto;
 public class Employee {
 	private int empNo;
 	private String empName;
+	public Employee(String empName) {
+		this.empName = empName;
+	}
+
 	private Title tilte;
 	private Employee manager;
 	private int salary;
