@@ -33,7 +33,10 @@ public class Department {
 	}
 	@Override
 	public String toString() {
-		return String.format("Department [detptNo=%s, deptName=%s, floor=%s]", detptNo, deptName, floor);
+		return String.format("%s, %s, %s", detptNo, deptName, floor);
+	}
+	public Department(int detptNo) {
+		this.detptNo = detptNo;
 	}
 	
 }

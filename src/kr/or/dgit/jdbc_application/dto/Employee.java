@@ -23,6 +23,10 @@ public class Employee {
 	public int getEmpNo() {
 		return empNo;
 	}
+	public Employee(int empNo) {
+		this.empNo = empNo;
+	}
+
 	public void setEmpNo(int empNo) {
 		this.empNo = empNo;
 	}
@@ -56,11 +60,9 @@ public class Employee {
 	public void setDno(Department dno) {
 		this.dno = dno;
 	}
-	
+
 	@Override
 	public String toString() {
-		return String.format("%s,%s, %s, %s, %s,%s", empNo, empName,tilte.getTitleName(), manager.getEmpName(), salary, dno.getDeptName());
-	}
-	
-	
+		return String.format("%s,%s,%s,%s,%s,%s", empNo, empName,tilte.getTitleNo(), manager.getEmpNo(), salary, dno.getDetptNo());
+	}	
 }

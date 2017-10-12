@@ -6,7 +6,7 @@ public class Title {
 	
 	@Override
 	public String toString() {
-		return String.format("Title [titleNo=%s, titleName=%s]", titleNo, titleName);
+		return String.format("%s, %s", titleNo, titleName);
 	}
 	public Title(){
 		
@@ -16,6 +16,10 @@ public class Title {
 		this.titleName = titleName;
 	}
 
+	public  Title(int titleNo) {
+		this.titleNo = titleNo;
+		
+	}
 	public int getTitleNo() {
 		return titleNo;
 	}
