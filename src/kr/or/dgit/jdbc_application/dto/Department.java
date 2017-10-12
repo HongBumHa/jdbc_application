@@ -24,6 +24,9 @@ public class Department {
 	public void setFloor(int floor) {
 		this.floor = floor;
 	}
+	public Department(String deptName) {
+		this.deptName = deptName;
+	}
 	public Department(int detptNo, String deptName, int floor) {
 		this.detptNo = detptNo;
 		this.deptName = deptName;

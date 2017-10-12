@@ -20,6 +20,9 @@ public class Title {
 		return titleNo;
 	}
 
+	public Title(String titleName) {
+		this.titleName = titleName;
+	}
 	public void setTitleNo(int titleNo) {
 		this.titleNo = titleNo;
 	}
