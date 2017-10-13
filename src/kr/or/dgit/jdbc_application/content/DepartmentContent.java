@@ -1,12 +1,15 @@
 package kr.or.dgit.jdbc_application.content;
 
-import javax.swing.JPanel;
 import java.awt.GridLayout;
+
+import javax.swing.JPanel;
+
 import kr.or.dgit.jdbc_application.common.TextFieldComponent;
 import kr.or.dgit.jdbc_application.dto.Department;
 
 @SuppressWarnings("serial")
 public class DepartmentContent extends JPanel {
+
 	private TextFieldComponent pDeptNo;
 	private TextFieldComponent pDeptName;
 	private TextFieldComponent pFloor;
@@ -20,11 +23,10 @@ public class DepartmentContent extends JPanel {
 		pDeptName = new TextFieldComponent("부서 명");
 		add(pDeptName);
 		
-		pFloor = new TextFieldComponent("부서 위치");
+		pFloor = new TextFieldComponent("위치");
 		add(pFloor);
-		
 	}
-	
+
 	public Department getContent(){
 		int deptNo = Integer.parseInt(pDeptNo.getTextValue());
 		String deptName = pDeptName.getTextValue();
@@ -32,16 +34,25 @@ public class DepartmentContent extends JPanel {
 		return new Department(deptNo, deptName, floor);
 	}
 	
-	public void setContent(Department dept){
-		pDeptNo.setTextValue(dept.getDetptNo()+"");
-		pDeptName.setTextValue(dept.getDeptName());
-		pFloor.setTextValue(dept.getFloor()+"");
+	public void setContent(Department department){
+		pDeptNo.setTextValue(department.getDeptNo()+"");
+		pDeptName.setTextValue(department.getDeptName());
+		pFloor.setTextValue(department.getFloor()+"");
 	}
 	
-	public void isEmptyCheck() throws Exception{
+	public void isEmptyCheck() throws Exception {
 		pDeptNo.isEmptyCheck();
 		pDeptName.isEmptyCheck();
 		pFloor.isEmptyCheck();
-		
 	}
 }
+
+
+
+
+
+
+
+
+
+

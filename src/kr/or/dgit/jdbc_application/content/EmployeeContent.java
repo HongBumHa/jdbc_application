@@ -1,40 +1,27 @@
 package kr.or.dgit.jdbc_application.content;
 
 import java.awt.GridLayout;
+import java.util.Vector;
 
-import javax.swing.DefaultComboBoxModel;
-import javax.swing.JComboBox;
-import javax.swing.JLabel;
 import javax.swing.JPanel;
-import javax.swing.JSpinner;
-import javax.swing.SpinnerModel;
-import javax.swing.SpinnerNumberModel;
-import javax.swing.SwingConstants;
 
+import kr.or.dgit.jdbc_application.common.ComboComponent;
+import kr.or.dgit.jdbc_application.common.SpinnerComponent;
 import kr.or.dgit.jdbc_application.common.TextFieldComponent;
 import kr.or.dgit.jdbc_application.dto.Department;
 import kr.or.dgit.jdbc_application.dto.Employee;
 import kr.or.dgit.jdbc_application.dto.Title;
 
-@SuppressWarnings({ "serial" })
+@SuppressWarnings("serial")
 public class EmployeeContent extends JPanel {
+
 	private TextFieldComponent pEmpNo;
 	private TextFieldComponent pEmpName;
-	private JPanel pTitle;
-	private JPanel pManager;
-	private JPanel pSalary;
-	private JPanel panel;
-	@SuppressWarnings("rawtypes")
-	private DefaultComboBoxModel tCbModel;
-	@SuppressWarnings("rawtypes")
-	private DefaultComboBoxModel mCbModel;
-	@SuppressWarnings("rawtypes")
-	private DefaultComboBoxModel dCbModel;
-	private SpinnerModel sModel;
-	private JSpinner sSalary;
-	private JLabel lblDno;
+	private ComboComponent<Department> pDno;
+	private ComboComponent<Employee> pManager;
+	private SpinnerComponent pSalary;
+	private ComboComponent<Title> pTitle;
 	
-	@SuppressWarnings({ "rawtypes", "unchecked" })
 	public EmployeeContent() {
 		setLayout(new GridLayout(0, 1, 0, 10));
 		
@@ -44,77 +31,72 @@ public class EmployeeContent extends JPanel {
 		pEmpName = new TextFieldComponent("사원 명");
 		add(pEmpName);
 		
-		pTitle = new JPanel();
-		add(pTitle);
-		pTitle.setLayout(new GridLayout(1, 0, 10, 0));
+		pDno = new ComboComponent<>("부서");
+		add(pDno);
 		
-		JLabel lblTitle = new JLabel("직책");
-		lblTitle.setHorizontalAlignment(SwingConstants.RIGHT);
-		pTitle.add(lblTitle);
-		tCbModel = new DefaultComboBoxModel(getTitle());
-		JComboBox cmbTitle = new JComboBox(tCbModel);
-		pTitle.add(cmbTitle);
-		
-		pManager = new JPanel();
+		pManager = new ComboComponent<>("관리자");
 		add(pManager);
-		pManager.setLayout(new GridLayout(1, 0, 10, 0));
 		
-		JLabel lblManager = new JLabel("매니저");
-		lblManager.setHorizontalAlignment(SwingConstants.RIGHT);
-		pManager.add(lblManager);
-		
-		mCbModel = new DefaultComboBoxModel(getManager());
-		JComboBox cmbManager = new JComboBox(mCbModel);
-		pManager.add(cmbManager);
-		
-		pSalary = new JPanel();
+		pSalary = new SpinnerComponent("급여");
+		pSalary.setDefaultValue(1500000, 1000000, 5000000, 100000);
 		add(pSalary);
-		pSalary.setLayout(new GridLayout(1, 0, 10, 0));
 		
-		JLabel lblSalary = new JLabel("월급");
-		lblSalary.setHorizontalAlignment(SwingConstants.RIGHT);
-		pSalary.add(lblSalary);
-		sModel = new SpinnerNumberModel(1500000,1000000,5000000,100000);
-		sSalary = new JSpinner(sModel);
+		pTitle = new ComboComponent<>("직책");
+		add(pTitle);
+		
+		setDepartModel();
+		setTitleMOdel();
+		setManagerModel();
+	}
 
-		pSalary.add(sSalary);
-		
-		panel = new JPanel();
-		add(panel);
-		panel.setLayout(new GridLayout(1, 0, 10, 0));
-		
-		lblDno = new JLabel("부서");
-		lblDno.setHorizontalAlignment(SwingConstants.RIGHT);
-		panel.add(lblDno);
-		
-		dCbModel = new DefaultComboBoxModel(getDno());
-		JComboBox cmbDno = new JComboBox(dCbModel);
-		panel.add(cmbDno);
+	private void setManagerModel() {
+		Vector<Employee> lists = new Vector<>();
+		lists.add(new Employee(1, "서현진",new Title(1, "사장"),new Employee(1), 100000, new Department(1)));
+		lists.add(new Employee(1));
+		lists.add(new Employee(1));
+		pManager.setComboBoxModel(lists);				
+	}
 
+	private void setTitleMOdel() {
+		Vector<Title> lists = new Vector<>();
+		lists.add(new Title(1, "사장"));
+		lists.add(new Title(2, "부장"));
+		lists.add(new Title(3, "사원"));
+		pTitle.setComboBoxModel(lists);		
 	}
-	private Object[] getDno() {
-		
-		return new Object[]{"영업(1)","기획(2)","개발(3)","연구(5)"};
-	}
-	private Object[] getManager() {
-		return new Object[]{"이성래","조민희","박영권","이수민"};
-	}
-	private Object[] getTitle() {
-		return new Object[]{"사장","부장","과장","대리","사원"};
+
+	public void setDepartModel(){
+		Vector<Department> lists = new Vector<>();
+		lists.add(new Department(1, "개발1", 11));
+		lists.add(new Department(2, "개발2", 12));
+		lists.add(new Department(3, "개발3", 13));
+		pDno.setComboBoxModel(lists);
 	}
 	public Employee getContent(){
 		int empNo = Integer.parseInt(pEmpNo.getTextValue());
 		String empName = pEmpName.getTextValue();
-		Title tilte = new Title(tCbModel.getSelectedItem().toString());
-		Employee manager = new Employee(mCbModel.getSelectedItem().toString());
-		int salary = Integer.parseInt(sSalary.getValue().toString());
-		Department dno = new Department(dCbModel.getSelectedItem().toString());
-		return new Employee(empNo, empName, tilte, manager, salary, dno);
+		Title title = pTitle.getSelectedItem();
+		Employee manager = new Employee(empNo);
+		int salary = pSalary.getSpinValue();
+		Department dno = pDno.getSelectedItem();
+		return new Employee(empNo, empName, title, manager, salary, dno);
 	}
 	
-	public void isEmptyCheck() throws Exception{
+	public void setContent(Employee employee){
+		pEmpNo.setTextValue(employee.getEmpNo()+"");
+		pEmpName.setTextValue(employee.getEmpName());
+		pDno.setSelectedItem(employee.getDno());
+		pManager.setSelectedItem(employee.getManager());
+		pSalary.setSpinValue(employee.getSalary());
+		pTitle.setSelectedItem(employee.getTitle());
+	}
+	
+	public void isEmptyCheck() throws Exception {
 		pEmpNo.isEmptyCheck();
 		pEmpName.isEmptyCheck();
-		
+		pDno.isEmptyCheck();
+		pManager.isEmptyCheck();
+		pSalary.isEmptyCheck();
+		pTitle.isEmptyCheck();
 	}
 }

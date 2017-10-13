@@ -15,24 +15,19 @@ public class DBCon {
 		return instance;
 	}
 
-	public Connection getConnection() {
-		return connection;
-	}
-
-	
 	private DBCon(){
 		Properties properties = getProperties("conf.properties");
 		try {
-			connection = DriverManager.getConnection(properties.getProperty("url"), 
-						properties.getProperty("user"), properties.getProperty("pwd"));
+			connection = DriverManager.getConnection(properties.getProperty("url"), properties.getProperty("user"), properties.getProperty("pwd"));
 		} catch (SQLException e) {
-			System.err.println(e.getErrorCode() + " - " + e.getMessage());
+			System.err.printf("%s - %s%n", e.getErrorCode(), e.getMessage());
 			e.printStackTrace();
 		}
-
-		
+/*		System.out.println(properties.getProperty("user"));
+		System.out.println(properties.getProperty("pwd"));
+		System.out.println(properties.getProperty("url"));*/
 	}
-
+	
 	private Properties getProperties(String propertiesPath) {
 		Properties properties = new Properties();
 		InputStream is = ClassLoader.getSystemResourceAsStream(propertiesPath);
@@ -43,5 +38,11 @@ public class DBCon {
 		}
 		return properties;
 	}
+
+	public Connection getConnection() {
+		return connection;
+	}
+
 	
+
 }

@@ -1,45 +1,74 @@
 package kr.or.dgit.jdbc_application.dto;
 
 public class Department {
-	private int detptNo;
+	private int deptNo;
 	private String deptName;
 	private int floor;
-	
-	
-	public int getDetptNo() {
-		return detptNo;
+
+	public Department() {
+		// TODO Auto-generated constructor stub
 	}
-	public void setDetptNo(int detptNo) {
-		this.detptNo = detptNo;
+
+	public Department(int deptNo) {
+		this.deptNo = deptNo;
 	}
+
+	public Department(int deptNo, String deptName, int floor) {
+		this.deptNo = deptNo;
+		this.deptName = deptName;
+		this.floor = floor;
+	}
+
+	public int getDeptNo() {
+		return deptNo;
+	}
+
+	public void setDeptNo(int deptNo) {
+		this.deptNo = deptNo;
+	}
+
 	public String getDeptName() {
 		return deptName;
 	}
+
 	public void setDeptName(String deptName) {
 		this.deptName = deptName;
 	}
+
 	public int getFloor() {
 		return floor;
 	}
+
 	public void setFloor(int floor) {
 		this.floor = floor;
 	}
-	public Department(String deptName) {
-		this.deptName = deptName;
+
+	
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + deptNo;
+		return result;
 	}
-	public Department(int detptNo, String deptName, int floor) {
-		this.detptNo = detptNo;
-		this.deptName = deptName;
-		this.floor = floor;
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Department other = (Department) obj;
+		if (deptNo != other.deptNo)
+			return false;
+		return true;
 	}
-	public Department() {
-	}
+
 	@Override
 	public String toString() {
-		return String.format("%s, %s, %s", detptNo, deptName, floor);
+		return String.format("%s(%s층)", deptName, floor);
 	}
-	public Department(int detptNo) {
-		this.detptNo = detptNo;
-	}
-	
+
 }
